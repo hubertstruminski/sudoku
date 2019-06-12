@@ -31,7 +31,7 @@ public class GeneratorSudokuBoard {
         return result;
     }
 
-    private boolean isConstraintsChecked(int row, int col, int number, int[][] board) {
+    public boolean isConstraintsChecked(int row, int col, int number, int[][] board) {
         return checkRow(row, number, board) && checkColumn(col, number, board) &&
                 checkSubsquare(row, col, number, board);
     }
