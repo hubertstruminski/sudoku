@@ -1,14 +1,11 @@
 import axios from 'axios';
-import GET_ERRORS from './types';
+import { GET_ERRORS, GET_BOARD } from './types';
 
 export const generateBoard = (history) => async dispatch => {
-    try {
-        const response = await axios.get("/sudoku");
-        console.log(response);
-    } catch(error) {
-        dispatch({
-            type: GET_ERRORS,
-            payload: error.response.data
-        })
-    }
+    const res = await axios.get("/sudoku");
+    console.log(res);
+    dispatch({
+        type: GET_BOARD,
+        payload: res.data
+    });
 }
