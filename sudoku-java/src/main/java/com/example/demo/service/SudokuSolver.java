@@ -3,8 +3,6 @@ package com.example.demo.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Random;
-
 @Service
 public class SudokuSolver {
 
@@ -17,14 +15,14 @@ public class SudokuSolver {
 //        this.generatorSudokuBoard = new GeneratorSudokuBoard();
 //    }
 
-    public boolean solve(int[][] board) {
+    public boolean solveChecker(int[][] board) {
         for (int row=0; row<board.length; row++) {
             for (int col=0; col<board[row].length; col++) {
                 if (board[row][col] == 0) {
                     for (int number=1; number<=9; number++) {
                         if(generatorSudokuBoard.isConstraintsChecked(row, col, number, board)) {
                             board[row][col] = number;
-                            if (solve(board)) {
+                            if (solveChecker(board)) {
                                 return true;
                             } else {
                                 board[row][col] = 0;
@@ -36,6 +34,26 @@ public class SudokuSolver {
             }
         }
         return true;
+    }
+
+    public int[][] solve(int[][] board) {
+        for (int row=0; row<board.length; row++) {
+            for (int col=0; col<board[row].length; col++) {
+                if (board[row][col] == 0) {
+                    for (int number=1; number<=9; number++) {
+                        if(generatorSudokuBoard.isConstraintsChecked(row, col, number, board)) {
+                            board[row][col] = number;
+                            if (solveChecker(board)) {
+                                return board;
+                            } else {
+                                board[row][col] = 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return board;
     }
 
     public void print(int[][] board) {
@@ -78,7 +96,7 @@ public class SudokuSolver {
 //            int[][] board = generatorSudokuBoard.generateSudokuBoard();
 //            int[][] sudokuBoard = sudokuSolver.cloneArray(board);
 //
-//            if(sudokuSolver.solve(sudokuBoard)) {
+//            if(sudokuSolver.solveChecker(sudokuBoard)) {
 //                sudokuSolver.print(board);
 //                System.out.println("--------------------------");
 //                sudokuSolver.print(sudokuBoard);

@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  background-image: url("./images/background.png");
+  min-height: 100vh;
 }
 
 .App-logo {
@@ -38,6 +40,7 @@
   border: 1px solid black;
   font-size: 35px;
   float: left;
+  background-color: white;
 }
 
 .txtArea {
@@ -54,4 +57,32 @@
 
 .field {
   color: red;
+}
+
+.container {
+  width: 100%;
+}
+
+.left {
+  float: left;
+  width: 50%;
+  margin-top: 15%;
+}
+
+.right {
+  float: left;
+  width: 30%;
+  margin-top: 15%;
+}
+
+.btnTip {
+  width: 42%;
+  padding: 4%;
+  background-color: #363D42;
+  border-radius: 25px;
+  color: white;
+  text-align: center;
+  border: 1px solid black;
+  text-transform: uppercase;
+  letter-spacing: 4px;
 }
