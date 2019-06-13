@@ -51,3 +51,7 @@
 .clear {
   clear: both;
 }
+
+.field {
+  color: red;
+}
