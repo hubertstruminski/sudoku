@@ -3,6 +3,7 @@ import { generateBoard } from '../actions/boardActions';
 import { getTip } from '../actions/tipActions';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import Timer from './Timer';
 
 class Sudoku extends React.Component {
     constructor() {
@@ -99,8 +100,12 @@ class Sudoku extends React.Component {
         return (
             <div className="container">
                 <div className="left" ref={(el) => this.divLeft = el}>
+                <h4>Game time: <Timer /></h4>
+                <br />
                     { isVisibleStart && this.createBoard(board).slice()}
                     {isVisibleTip && this.createBoard(boardTip).slice()}
+                    <br />
+                    
                 </div>
                 <div className="right">
                     <form onSubmit={this.giveTip}>
