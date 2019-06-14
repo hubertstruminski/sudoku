@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  background-image: url("./images/background.png");
+  min-height: 100vh;
 }
 
 .App-logo {
@@ -30,4 +32,74 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.square {
+  width: 11%;
+  height: 11%;
+  border: 1px solid black;
+  font-size: 35px;
+  float: left;
+  background-color: white;
+  overflow: hidden;
+  white-space: nowrap;
+  color: red;
+}
+
+.txtArea {
+  background-color: #ffdbdb;
+  font-size: 25px;
+  text-align: center;
+  width: 60px;
+  height: 60px;
+}
+
+.clear {
+  clear: both;
+}
+
+.field {
+  color: red;
+}
+
+.container {
+  width: 100%;
+}
+
+.left {
+  float: left;
+  width: 50%;
+  margin-top: 15%;
+}
+
+.right {
+  float: left;
+  width: 30%;
+  margin-top: 15%;
+}
+
+.btnTip {
+  width: 42%;
+  padding: 4%;
+  background-color: #363D42;
+  border-radius: 25px;
+  color: white;
+  text-align: center;
+  border: 1px solid black;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+}
+.square-black {
+  width: 11%;
+  height: 11%;
+  border: 1px solid black;
+  font-size: 35px;
+  float: left;
+  background-color: white;
+  overflow: hidden;
+  white-space: nowrap;
+  color: black !important;
+}
+[contentEditable="true"].square {
+  color: black !important;
 }
