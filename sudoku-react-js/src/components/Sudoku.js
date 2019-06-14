@@ -11,7 +11,9 @@ class Sudoku extends React.Component {
         this.state = {
             boardTip: [],
             isVisibleStart: false,
-            isVisibleTip: false
+            isVisibleTip: false,
+            isBlackFont: false,
+            isRedFont: true
         }
         this.giveTip = this.giveTip.bind(this);
         this.onKey = this.onKey.bind(this);
@@ -42,7 +44,8 @@ class Sudoku extends React.Component {
 
     createBoard = (...table) => {
         let result = [];
-        let x = 0;
+        let { isBlackFont, isRedFont } = this.state;
+
         for(let i=0; i<table.length; i++) {
             for(let j=0; j<table[i].length; j++) {
                 let children = [];
@@ -51,21 +54,21 @@ class Sudoku extends React.Component {
                         children.push(<div 
                                         key={table[0][j][k]} 
                                         ref={(el) => this.divRef = el} 
-                                        className="square"
+                                        className={[isBlackFont && 'square-black', isRedFont && 'square']
+                                                    .filter(e => !!e).join(' ')}
                                         contentEditable="true"
                                         onKeyDown={this.onKey}
-                                        // onKeyUp={this.onKey}
                                         > 
                                     </div>);
                     } else {
                         children.push(<div 
                                         key={table[0][j][k]} 
                                         ref={(el) => this.divRef = el} 
-                                        className="square"
-                                        // onKeyDown={this.onKey}
+                                        className={[isBlackFont && 'square-black', isRedFont && 'square']
+                                                    .filter(e => !!e).join(' ')}
                                         onKeyUp={this.onKey}
                                         >
-                                            <span className="field">{ table[i][j][k] }</span>
+                                         { table[i][j][k] }
                                     </div>);
                     }
                 }
@@ -79,21 +82,20 @@ class Sudoku extends React.Component {
     giveTip(e) {
         e.preventDefault();
         const { board, getTip } = this.props;
-        this.setState({ isVisibleTip: true })
-        this.setState({ isVisibleStart: false }); 
+        this.setState({ 
+            isVisibleTip: true,
+            isVisibleStart: false,
+            isBlackFont: true,
+            isRedFont: false
+        })
         getTip(board, this.state.history);   
     }
 
     render() {
         const { board } = this.props;
-        
-        let isVisibleStart = this.state.isVisibleStart;
-        let isVisibleTip = this.state.isVisibleTip;
-
-        // if(isVisibleTip) {
-            
-        // }
         const { boardTip } = this.props;
+        let { isVisibleStart, isVisibleTip } = this.state;
+
         return (
             <div className="container">
                 <div className="left" ref={(el) => this.divLeft = el}>

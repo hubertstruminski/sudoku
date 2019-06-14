@@ -43,6 +43,7 @@
   background-color: white;
   overflow: hidden;
   white-space: nowrap;
+  color: red;
 }
 
 .txtArea {
@@ -87,4 +88,18 @@
   border: 1px solid black;
   text-transform: uppercase;
   letter-spacing: 4px;
+}
+.square-black {
+  width: 11%;
+  height: 11%;
+  border: 1px solid black;
+  font-size: 35px;
+  float: left;
+  background-color: white;
+  overflow: hidden;
+  white-space: nowrap;
+  color: black !important;
+}
+[contentEditable="true"].square {
+  color: black !important;
 }
