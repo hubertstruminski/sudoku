@@ -1,16 +1,11 @@
 import { GET_TIP } from '../actions/types';
 
-const initialState = {
-    boardTip: []
-}
-
-export default function(state = initialState, action) {
+export default function(state = [], action) {
     switch(action.type) {
         case GET_TIP:
-            return {
-                ...state,
-                boardTip: action.payload
-            }
+            return [
+                ...state, ...action.payload
+            ]
         default:
             return state;
     }

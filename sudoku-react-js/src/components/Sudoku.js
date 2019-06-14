@@ -14,11 +14,30 @@ class Sudoku extends React.Component {
             isVisibleTip: false
         }
         this.giveTip = this.giveTip.bind(this);
+        this.onKey = this.onKey.bind(this);
     }
 
     componentDidMount() {
         this.setState({ isVisibleStart: true });
         this.props.generateBoard(this.props.history);
+    }
+
+    onKey(e) {
+        e.target.innerText = "";
+
+        let keycode = e.keyCode;
+        if(keycode > 64 && keycode < 91 || keycode > 185 && keycode < 193 ||
+            keycode > 218 && keycode < 223 || keycode == 48) {
+            e.preventDefault();
+            e.target.innerText = "";
+        }
+        if(keycode == 32 || keycode == 13) {
+            e.preventDefault();
+            e.target.innerText = "";
+        }
+        if(e.target.innerText.length === 1) {
+            e.preventDefault();
+        }
     }
 
     createBoard = (...table) => {
@@ -34,6 +53,8 @@ class Sudoku extends React.Component {
                                         ref={(el) => this.divRef = el} 
                                         className="square"
                                         contentEditable="true"
+                                        onKeyDown={this.onKey}
+                                        // onKeyUp={this.onKey}
                                         > 
                                     </div>);
                     } else {
@@ -41,6 +62,8 @@ class Sudoku extends React.Component {
                                         key={table[0][j][k]} 
                                         ref={(el) => this.divRef = el} 
                                         className="square"
+                                        // onKeyDown={this.onKey}
+                                        onKeyUp={this.onKey}
                                         >
                                             <span className="field">{ table[i][j][k] }</span>
                                     </div>);
@@ -53,34 +76,24 @@ class Sudoku extends React.Component {
         return result;
     }
 
-    giveTip() {
-        const { board } = this.props;
-        const tip = this.createBoard(board).slice();
-        this.setState({ boardTip: tip });
-
-        console.log("TIP array");
-        console.log(tip);
-        console.log("STATE");
-        console.log(this.state.boardTip);
-
-        this.setState({ isVisibleStart: false });
-        this.setState({ isVisibleTip: true });
-
-        this.props.getTip(board, this.state.history);
-
-
-        
-
-        // this.divLeft.innerHTML = "";
-        // this.divLeft.innerHTML = this.createBoard(solvedArray).slice();
+    giveTip(e) {
+        e.preventDefault();
+        const { board, getTip } = this.props;
+        this.setState({ isVisibleTip: true })
+        this.setState({ isVisibleStart: false }); 
+        getTip(board, this.state.history);   
     }
 
     render() {
         const { board } = this.props;
-        const { boardTip } = this.props;
         
         let isVisibleStart = this.state.isVisibleStart;
         let isVisibleTip = this.state.isVisibleTip;
+
+        // if(isVisibleTip) {
+            
+        // }
+        const { boardTip } = this.props;
         return (
             <div className="container">
                 <div className="left" ref={(el) => this.divLeft = el}>
@@ -100,7 +113,7 @@ class Sudoku extends React.Component {
 
 Sudoku.propTypes = {
     board: PropTypes.array.isRequired,
-    boardTip: PropTypes.array.isRequired
+    boardTip: PropTypes.array
 }
 
 const mapStateToProps = state => ({
