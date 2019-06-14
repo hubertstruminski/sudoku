@@ -74,21 +74,22 @@
 
 .right {
   float: left;
-  width: 30%;
+  width: 50%;
   margin-top: 15%;
 }
 
 .btnTip {
-  width: 42%;
-  padding: 4%;
+  width: 40%;
+  padding: 3.5%;
   background-color: #363D42;
-  border-radius: 25px;
+  border-radius: 40px;
   color: white;
   text-align: center;
   border: 1px solid black;
-  text-transform: uppercase;
   letter-spacing: 4px;
+  margin-top: 4%;
 }
+
 .square-black {
   width: 11%;
   height: 11%;
@@ -100,6 +101,24 @@
   white-space: nowrap;
   color: black !important;
 }
+
 [contentEditable="true"].square {
   color: black !important;
+}
+
+.keyboard-control {
+  text-align: center;
+}
+
+.inputUser {
+  margin-top: 0;
+  width: 40%;
+  padding: 1.5%;
+  border-radius: 40px;
+  border: 1px solid black;
+}
+
+.redFont {
+  color: red;
+  margin-top: 30%;
 }

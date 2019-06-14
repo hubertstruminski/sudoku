@@ -6,8 +6,8 @@ import PropTypes from 'prop-types';
 import Timer from './Timer';
 
 class Sudoku extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         this.state = {
             boardTip: [],
@@ -16,8 +16,11 @@ class Sudoku extends React.Component {
             isBlackFont: false,
             isRedFont: true
         }
+        this.timerRef = React.createRef();
+
         this.giveTip = this.giveTip.bind(this);
         this.onKey = this.onKey.bind(this);
+        this.checkBoard = this.checkBoard.bind(this);
     }
 
     componentDidMount() {
@@ -67,7 +70,7 @@ class Sudoku extends React.Component {
                                         ref={(el) => this.divRef = el} 
                                         className={[isBlackFont && 'square-black', isRedFont && 'square']
                                                     .filter(e => !!e).join(' ')}
-                                        onKeyUp={this.onKey}
+                                        onKeyDown={this.onKey}
                                         >
                                          { table[i][j][k] }
                                     </div>);
@@ -92,6 +95,17 @@ class Sudoku extends React.Component {
         getTip(board, this.state.history);   
     }
 
+    checkBoard(e) {
+        let isTip = this.state.isVisibleTip;
+        this.timerRef.current.stopTime();
+
+        if(isTip) {
+            const { boardTip } = this.props;
+        } else {
+            const { board } = this.props;
+        }
+    }
+
     render() {
         const { board } = this.props;
         const { boardTip } = this.props;
@@ -100,17 +114,38 @@ class Sudoku extends React.Component {
         return (
             <div className="container">
                 <div className="left" ref={(el) => this.divLeft = el}>
-                <h4>Game time: <Timer /></h4>
+                <h4>Game time: <Timer ref={this.timerRef} /></h4>
                 <br />
                     { isVisibleStart && this.createBoard(board).slice()}
                     {isVisibleTip && this.createBoard(boardTip).slice()}
-                    <br />
-                    
                 </div>
                 <div className="right">
-                    <form onSubmit={this.giveTip}>
-                        <input type="submit" value="Tip" className="btnTip" />
-                    </form>
+                    <div className="keyboard-control">
+                        <h3>If you feel that you're stuck for too long check solution</h3>
+                        
+                        <form onSubmit={this.giveTip}>
+                            <input type="submit" value="Tip" className="btnTip" />
+                        </form>
+
+                        <form onSubmit={this.checkBoard} >
+                            <h5 className="redFont">Remember, input user name before send solution</h5>
+                            <input 
+                                type="text" 
+                                name="username" 
+                                id="username" 
+                                className="inputUser" 
+                                maxLength="22"
+                            />
+                            <br />
+                            <label for="username">Username</label>
+                            <br />
+                            <input 
+                                type="submit" 
+                                value="Check board" 
+                                className="btnTip" 
+                            />
+                        </form>
+                    </div>
                 </div>
                 <div className="clear"></div>       
             </div>

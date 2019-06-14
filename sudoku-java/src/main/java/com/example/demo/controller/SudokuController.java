@@ -40,4 +40,9 @@ public class SudokuController {
         int[][] ints = sudokuSolver.cloneArray(solvedBoard);
         return new ResponseEntity<int[][]>(ints, HttpStatus.OK);
     }
+
+    @PostMapping("/result")
+    public ResponseEntity<?> checkResult(@RequestBody int[][] boardCheck, String time, String userName, boolean isTip) {
+        return new ResponseEntity<String>("OK", HttpStatus.OK);
+    }
 }

@@ -8,10 +8,12 @@ class Timer extends React.Component {
             isOn: false,
             seconds: 0,
             minutes: 0,
-            hours: 0
+            hours: 0,
+            timeString: ''
         }
         this.startTimer = this.startTimer.bind(this);
         this.showTime = this.showTime.bind(this);
+        this.stopTime = this.stopTime.bind(this);
     }
 
     componentDidMount() {
@@ -19,7 +21,7 @@ class Timer extends React.Component {
     }
 
     componentWillUnmount() {
-        clearInterval(this.interval);
+        this.stopTime();
     }
 
     startTimer() {
@@ -40,6 +42,12 @@ class Timer extends React.Component {
                 seconds: prevState.seconds + 1
             }));
         }, 1000)
+        let time = this.showTime();
+        this.setState({ timeString: time});
+    }
+
+    stopTime() {
+        clearInterval(this.interval);
     }
 
     showTime() {
@@ -70,6 +78,7 @@ class Timer extends React.Component {
 
     render() {
         let time = this.showTime();
+
         return (
             <span>{time}</span>
         );
