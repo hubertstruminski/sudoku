@@ -1,6 +1,7 @@
 import React from 'react';
 import { generateBoard } from '../actions/boardActions';
 import { getTip } from '../actions/tipActions';
+import { checkResult, checkResultTip } from '../actions/resultActions';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Timer from './Timer';
@@ -14,18 +15,27 @@ class Sudoku extends React.Component {
             isVisibleStart: false,
             isVisibleTip: false,
             isBlackFont: false,
-            isRedFont: true
+            isRedFont: true,
+            time: [],
+            username: '',
+            invalidUserName: false
         }
         this.timerRef = React.createRef();
 
         this.giveTip = this.giveTip.bind(this);
         this.onKey = this.onKey.bind(this);
         this.checkBoard = this.checkBoard.bind(this);
+        this.passTime = this.passTime.bind(this);
+        this.onChange = this.onChange.bind(this);
     }
 
     componentDidMount() {
         this.setState({ isVisibleStart: true });
         this.props.generateBoard(this.props.history);
+    }
+
+    onChange(e) {
+        this.setState({ [e.target.name]: e.target.value });
     }
 
     onKey(e) {
@@ -44,6 +54,10 @@ class Sudoku extends React.Component {
         if(e.target.innerText.length === 1) {
             e.preventDefault();
         }
+    }
+
+    passTime(newTime) {
+        this.state.time.push(newTime)
     }
 
     createBoard = (...table) => {
@@ -96,13 +110,24 @@ class Sudoku extends React.Component {
     }
 
     checkBoard(e) {
+
+        if(this.state.username.length === 0) {
+            this.setState({ invalidUserName: true });
+            e.preventDefault();
+        }
+
         let isTip = this.state.isVisibleTip;
         this.timerRef.current.stopTime();
 
+        let time = this.state.time[0];
+
+        let userName = this.state.username;
+
         if(isTip) {
-            const { boardTip } = this.props;
+            this.props.checkResultTip(time, userName, isTip, this.state.history);
         } else {
             const { board } = this.props;
+            // this.props.checkResult()
         }
     }
 
@@ -114,14 +139,14 @@ class Sudoku extends React.Component {
         return (
             <div className="container">
                 <div className="left" ref={(el) => this.divLeft = el}>
-                <h4>Game time: <Timer ref={this.timerRef} /></h4>
+                <h4 className="sizeh4">Game time: <Timer ref={this.timerRef} onPassTime={this.passTime} /></h4>
                 <br />
                     { isVisibleStart && this.createBoard(board).slice()}
                     {isVisibleTip && this.createBoard(boardTip).slice()}
                 </div>
                 <div className="right">
                     <div className="keyboard-control">
-                        <h3>If you feel that you're stuck for too long check solution</h3>
+                        <h3 className="sizeh3">If you feel that you're stuck for too long check solution</h3>
                         
                         <form onSubmit={this.giveTip}>
                             <input type="submit" value="Tip" className="btnTip" />
@@ -135,6 +160,9 @@ class Sudoku extends React.Component {
                                 id="username" 
                                 className="inputUser" 
                                 maxLength="22"
+                                ref={(el) => this.userNameRef = el}
+                                onChange={this.onChange}
+                                value={this.state.username}
                             />
                             <br />
                             <label for="username">Username</label>
@@ -147,20 +175,32 @@ class Sudoku extends React.Component {
                         </form>
                     </div>
                 </div>
-                <div className="clear"></div>       
+                <div className="clear"></div> 
+                <ShowInvalidUserName invalidUserName={this.state.invalidUserName} />
             </div>
         );
     }
 }
 
+function ShowInvalidUserName(props) {
+    if(props.invalidUserName) {
+        return (
+            <div className="alert alert-danger invalidUser">You forgot input your user name. Try again...</div>
+        );
+    }
+    return null;
+}
+
 Sudoku.propTypes = {
     board: PropTypes.array.isRequired,
-    boardTip: PropTypes.array
+    boardTip: PropTypes.array,
+    result: PropTypes.array
 }
 
 const mapStateToProps = state => ({
     board: state.board,
-    boardTip: state.boardTip
+    boardTip: state.boardTip,
+    result: state.result
 })
 
-export default connect(mapStateToProps, { generateBoard, getTip })(Sudoku);
+export default connect(mapStateToProps, { generateBoard, getTip, checkResult, checkResultTip })(Sudoku);

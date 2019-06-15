@@ -42,12 +42,13 @@ class Timer extends React.Component {
                 seconds: prevState.seconds + 1
             }));
         }, 1000)
-        let time = this.showTime();
-        this.setState({ timeString: time});
     }
 
     stopTime() {
         clearInterval(this.interval);
+
+        let time = this.showTime();
+        this.props.onPassTime(time);
     }
 
     showTime() {
@@ -70,8 +71,6 @@ class Timer extends React.Component {
         } else {
             hr = this.state.hours;
         }
-
-        
         return hr + ":" + min + ":" + sec;
     }
 

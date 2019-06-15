@@ -8,6 +8,8 @@ import Statistics from './components/Statistics';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import store from './store';
+import Result from './components/Result';
+import ResultTip from './components/ResultTip';
 
 function App() {
   return (
@@ -17,7 +19,9 @@ function App() {
           <Header />
           <Route exact path="/" component={Sudoku} />
           <Route exact path="/sudoku" component={Sudoku} />
-
+          <Route exact path="/sudoku/result" component={Result} />
+          <Route exact path="/sudoku/resultTip" component={ResultTip} />
+          
           <Route exact path="/guide" component={Guide} />
           <Route exact path="/statistics" component={Statistics} />
         </div>

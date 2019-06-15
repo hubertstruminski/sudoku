@@ -38,7 +38,7 @@
   width: 11%;
   height: 11%;
   border: 1px solid black;
-  font-size: 35px;
+  font-size: 2.1vw;
   float: left;
   background-color: white;
   overflow: hidden;
@@ -88,13 +88,14 @@
   border: 1px solid black;
   letter-spacing: 4px;
   margin-top: 4%;
+  font-size: 1vw;
 }
 
 .square-black {
   width: 11%;
   height: 11%;
   border: 1px solid black;
-  font-size: 35px;
+  font-size: 2.1vw;
   float: left;
   background-color: white;
   overflow: hidden;
@@ -108,6 +109,7 @@
 
 .keyboard-control {
   text-align: center;
+  
 }
 
 .inputUser {
@@ -121,4 +123,25 @@
 .redFont {
   color: red;
   margin-top: 30%;
+  font-size: 1vw;
+}
+
+.invalidUser {
+  margin-top: 4%;
+}
+
+.sizeh3 {
+  font-size: 1.5vw;
+}
+
+.sizeh4 {
+  font-size: 1.4vw;
+}
+
+.logoSize {
+  font-size: 1.2vw;
+}
+
+.menuSize {
+  font-size: 0.9vw;
 }
