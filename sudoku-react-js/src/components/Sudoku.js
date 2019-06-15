@@ -22,6 +22,8 @@ class Sudoku extends React.Component {
         }
         this.timerRef = React.createRef();
 
+        this.divs = [];
+
         this.giveTip = this.giveTip.bind(this);
         this.onKey = this.onKey.bind(this);
         this.checkBoard = this.checkBoard.bind(this);
@@ -63,6 +65,7 @@ class Sudoku extends React.Component {
     createBoard = (...table) => {
         let result = [];
         let { isBlackFont, isRedFont } = this.state;
+        let x = 0;
 
         for(let i=0; i<table.length; i++) {
             for(let j=0; j<table[i].length; j++) {
@@ -71,7 +74,7 @@ class Sudoku extends React.Component {
                     if(table[i][j][k] === 0) {
                         children.push(<div 
                                         key={table[0][j][k]} 
-                                        ref={(el) => this.divRef = el} 
+                                        ref={(el) => {this.divs[x++] = el}} 
                                         className={[isBlackFont && 'square-black', isRedFont && 'square']
                                                     .filter(e => !!e).join(' ')}
                                         contentEditable="true"
@@ -81,7 +84,7 @@ class Sudoku extends React.Component {
                     } else {
                         children.push(<div 
                                         key={table[0][j][k]} 
-                                        ref={(el) => this.divRef = el} 
+                                        ref={(el) => {this.divs[x++] = el}} 
                                         className={[isBlackFont && 'square-black', isRedFont && 'square']
                                                     .filter(e => !!e).join(' ')}
                                         onKeyDown={this.onKey}
@@ -110,6 +113,7 @@ class Sudoku extends React.Component {
     }
 
     checkBoard(e) {
+        e.preventDefault();
 
         if(this.state.username.length === 0) {
             this.setState({ invalidUserName: true });
@@ -120,15 +124,39 @@ class Sudoku extends React.Component {
         this.timerRef.current.stopTime();
 
         let time = this.state.time[0];
-
         let userName = this.state.username;
 
+        let fullFilledBoard = this.divs;
+        let processedBoard = this.processBoard(fullFilledBoard);
+
         if(isTip) {
-            this.props.checkResultTip(time, userName, isTip, this.state.history);
+            this.props.checkResultTip(time, userName, this.props.history);
         } else {
-            const { board } = this.props;
-            // this.props.checkResult()
+            let fullFilledBoard = this.state.divs;
         }
+    }
+
+    create2DArray(rows) {
+        var array = [];   
+        for (var i=0;i<rows;i++) {
+           array[i] = [];
+        }
+        return array;
+      }
+
+    processBoard(...table) {
+        let result = this.create2DArray(9);
+        let rows = 0;
+        let columns = 0;
+        for(let i=0; i<81; i++) {
+            if(columns === 9) {
+                columns = 0;
+                rows++;
+            }
+            result[rows][columns] = table[0][i].innerText;
+            columns++;
+        }
+        return result;
     }
 
     render() {
@@ -203,4 +231,5 @@ const mapStateToProps = state => ({
     result: state.result
 })
 
-export default connect(mapStateToProps, { generateBoard, getTip, checkResult, checkResultTip })(Sudoku);
+export default connect(mapStateToProps, { generateBoard, 
+    getTip, checkResult, checkResultTip })(Sudoku);

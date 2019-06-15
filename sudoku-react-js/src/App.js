@@ -20,8 +20,8 @@ function App() {
           <Route exact path="/" component={Sudoku} />
           <Route exact path="/sudoku" component={Sudoku} />
           <Route exact path="/sudoku/result" component={Result} />
-          <Route exact path="/sudoku/resultTip" component={ResultTip} />
-          
+          <Route exact path="/resultTip" component={ResultTip} />
+
           <Route exact path="/guide" component={Guide} />
           <Route exact path="/statistics" component={Statistics} />
         </div>

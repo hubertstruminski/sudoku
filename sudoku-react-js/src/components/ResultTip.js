@@ -1,11 +1,32 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 class ResultTip extends React.Component {
+
     render() {
+        const { result } = this.props;
+        let time = result[0];
+        let userName = result[1];
         return (
-            <div>Result Tip</div>
+            <div className="alert alert-warning sizeDivWarning">
+                { userName }, you were stuck by: { time }
+                <br />
+                <br />
+                You used the tip so you will not get to the rankings.
+                <br />
+                Try again...
+            </div>
         );
     }
 }
 
-export default ResultTip;
+ResultTip.propTypes = {
+    result: PropTypes.array
+}
+
+const mapStateToProps = state => ({
+    result: state.result
+})
+
+export default connect(mapStateToProps, {  })(ResultTip);

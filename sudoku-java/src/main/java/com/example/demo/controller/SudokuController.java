@@ -62,18 +62,16 @@ public class SudokuController {
         return new ResponseEntity<String>("OK", HttpStatus.OK);
     }
 
-    @PostMapping("/resultTip/{userName}/{isTip}")
-    public ResponseEntity<?> checkResultForTip(@RequestBody  String time, @PathVariable String userName,
-                                               @PathVariable String isTip) throws UnsupportedEncodingException {
+    @PostMapping("/resultTip/{userName}")
+    public ResponseEntity<?> checkResultForTip(@RequestBody  String time,
+                                               @PathVariable String userName) throws UnsupportedEncodingException {
         time = customUrlDecoder.decodeAndSplitUrl(time);
-        System.out.println(time);
-
         userName = customUrlDecoder.decodeAndSplitUrl(userName);
-        System.out.println(userName);
 
-        isTip = customUrlDecoder.decodeAndSplitUrl(isTip);
-        System.out.println(isTip);
+        Object[] result = new Object[2];
+        result[0] = time;
+        result[1] = userName;
 
-        return new ResponseEntity<String>("OK", HttpStatus.OK);
+        return new ResponseEntity<Object[]>(result, HttpStatus.OK);
     }
 }
