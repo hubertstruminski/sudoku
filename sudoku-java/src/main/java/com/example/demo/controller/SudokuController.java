@@ -54,7 +54,11 @@ public class SudokuController {
     @PostMapping("/result/{userName}/{time}")
     public ResponseEntity<?> checkResult(@RequestBody int[][] boardCheck, @PathVariable String time,
                                          @PathVariable String userName) throws UnsupportedEncodingException {
-        mainThread.checkBoardWithinThreads(boardCheck);
+        if(mainThread.checkBoardWithinThreads(boardCheck)) {
+
+        } else {
+
+        }
         return new ResponseEntity<String>("OK", HttpStatus.OK);
     }
 
