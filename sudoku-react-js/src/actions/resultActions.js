@@ -2,9 +2,6 @@ import axios from 'axios';
 import { GET_RESULT } from './types';
 
 export const checkResult = (boardCheck, time, userName, history) => async dispatch => {
-    console.log(boardCheck);
-    console.log(time);
-    console.log(userName);
     const response = await axios.post(`/sudoku/result/${userName}/${time}`, boardCheck);
     history.push("/result");
     dispatch({

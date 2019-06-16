@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.service.CustomUrlDecoder;
 import com.example.demo.service.GeneratorSudokuBoard;
 import com.example.demo.service.SudokuSolver;
+import com.example.demo.thread.MainThread;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,9 @@ public class SudokuController {
 
     @Autowired
     private CustomUrlDecoder customUrlDecoder;
+
+    @Autowired
+    private MainThread mainThread;
 
     private boolean isSolved = false;
 
@@ -50,7 +54,7 @@ public class SudokuController {
     @PostMapping("/result/{userName}/{time}")
     public ResponseEntity<?> checkResult(@RequestBody int[][] boardCheck, @PathVariable String time,
                                          @PathVariable String userName) throws UnsupportedEncodingException {
-
+        mainThread.checkBoardWithinThreads(boardCheck);
         return new ResponseEntity<String>("OK", HttpStatus.OK);
     }
 
