@@ -1,9 +1,9 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.Statistics;
-import com.example.demo.repository.StatisticsRepository;
 import com.example.demo.service.CustomUrlDecoder;
 import com.example.demo.service.GeneratorSudokuBoard;
+import com.example.demo.service.StatisticsService;
 import com.example.demo.service.SudokuSolver;
 import com.example.demo.thread.MainThread;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +34,7 @@ public class SudokuController {
     private MainThread mainThread;
 
     @Autowired
-    private StatisticsRepository statisticsRepository;
+    private StatisticsService statisticsService;
 
     private boolean isSolved = false;
 
@@ -64,7 +64,7 @@ public class SudokuController {
         Object[] result;
         if(mainThread.checkBoardWithinThreads(boardCheck)) {
             Statistics statistics = new Statistics(userName, time, new Date());
-            statisticsRepository.save(statistics);
+            statisticsService.save(statistics);
 
             result = new Object[] {true, userName, time};
         } else {

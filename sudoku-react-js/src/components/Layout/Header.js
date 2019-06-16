@@ -24,7 +24,7 @@ class Header extends React.Component {
                     <div className="collapse navbar-collapse">
                         <ul className="navbar-nav navbar-collapse justify-content-end">
                             <li>
-                                <Link to="/statistics" className="nav-link">
+                                <Link to="/world_statistics" className="nav-link">
                                     <span className="menuSize">
                                         Statistics
                                     </span>

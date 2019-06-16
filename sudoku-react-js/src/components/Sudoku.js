@@ -126,8 +126,6 @@ class Sudoku extends React.Component {
         let time = this.state.time[0];
         let userName = this.state.username;
 
-        
-
         if(!isTip) {
             this.props.checkResultTip(time, userName, this.props.history);
         } else if(isTip) {

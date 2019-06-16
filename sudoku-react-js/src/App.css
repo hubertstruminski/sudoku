@@ -133,6 +133,7 @@
 .sizeh3 {
   font-size: 1.5vw;
 }
+console.log("componentDidMount()")
 
 .sizeh4 {
   font-size: 1.4vw;
@@ -153,4 +154,27 @@
   margin-left: auto;
   margin-right: auto;
   font-size: 1.5vw;
+}
+
+.table-size {
+  width: 60%;
+
+}
+
+.flex {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.title {
+  position: absolute;
+  left: 50%;
+  top: 20%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  font-weight: 500;
+  font-size: 2.8vw;
 }

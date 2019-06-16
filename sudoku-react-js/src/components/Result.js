@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 class Result extends React.Component {
     constructor() {
@@ -7,10 +9,58 @@ class Result extends React.Component {
     }
 
     render() {
+        const { result } = this.props;
+
+        let isSuccess = result[0];
+        let userName = result[1];
+        let time = result[2];
+
         return (
-            <div>Your score:</div>
+            <div>
+                <ShowResultMessage 
+                    isSuccess={isSuccess} 
+                    userName={userName} 
+                    time={time} 
+                />
+            </div>
         );
     }
 }
 
-export default Result;
+function ShowResultMessage(props) {
+    if(props.isSuccess) {
+        return (
+            <div className="alert alert-success sizeDivWarning">
+                Sudoku has been resolved successfully by {props.userName}.
+                <br />
+                Task completed in {props.time}.
+                <br />
+                Your result goes to the world rankings.
+                <br />
+                <br />
+                See you again...
+            </div>
+        );
+    } else {
+        return (
+            <div  className="alert alert-danger sizeDivWarning">
+                Sudoku has not been resolved successfully by {props.userName}.
+                <br />
+                Task not completed. Your were stuck in {props.time}.
+                <br /><br />
+                Try again...
+            </div>
+        );
+    }
+    return null;
+}
+
+Result.propTypes = {
+    result: PropTypes.array
+}
+
+const mapStateToProps = state => ({
+    result: state.result
+})
+
+export default connect(mapStateToProps, {  })(Result);

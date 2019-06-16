@@ -10,7 +10,7 @@ class ResultTip extends React.Component {
         let userName = result[1];
         return (
             <div className="alert alert-danger sizeDivWarning">
-                { userName }, you were stuck by: { time }
+                { userName }, you were stuck in { time }.
                 <br />
                 <br />
                 You used the tip so you will not get to the rankings.

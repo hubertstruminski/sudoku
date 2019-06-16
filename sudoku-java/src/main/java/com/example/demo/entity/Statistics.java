@@ -17,7 +17,7 @@ public class Statistics {
     private String time;
 
     @Column(name = "date")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date date;
 
     public Statistics(String userName, String time, Date date) {

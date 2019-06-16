@@ -3,7 +3,7 @@ import './App.css';
 import Header from './components/Layout/Header';
 import Sudoku from './components/Sudoku';
 import Guide from './components/Guide';
-import Statistics from './components/Statistics';
+import Stat from './components/Statistics';
 
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
@@ -23,7 +23,7 @@ function App() {
           <Route exact path="/resultTip" component={ResultTip} />
 
           <Route exact path="/guide" component={Guide} />
-          <Route exact path="/statistics" component={Statistics} />
+          <Route exact path="/world_statistics" component={Stat} />
         </div>
       </Router>
     </Provider>
