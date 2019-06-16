@@ -126,13 +126,15 @@ class Sudoku extends React.Component {
         let time = this.state.time[0];
         let userName = this.state.username;
 
-        let fullFilledBoard = this.divs;
-        let processedBoard = this.processBoard(fullFilledBoard);
+        
 
-        if(isTip) {
+        if(!isTip) {
             this.props.checkResultTip(time, userName, this.props.history);
-        } else {
-            let fullFilledBoard = this.state.divs;
+        } else if(isTip) {
+            let fullFilledBoard = this.divs;
+            let processedBoard = this.processBoard(fullFilledBoard);
+
+            this.props.checkResult(processedBoard, time, userName, this.props.history);
         }
     }
 

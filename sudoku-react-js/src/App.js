@@ -19,7 +19,7 @@ function App() {
           <Header />
           <Route exact path="/" component={Sudoku} />
           <Route exact path="/sudoku" component={Sudoku} />
-          <Route exact path="/sudoku/result" component={Result} />
+          <Route exact path="/result" component={Result} />
           <Route exact path="/resultTip" component={ResultTip} />
 
           <Route exact path="/guide" component={Guide} />

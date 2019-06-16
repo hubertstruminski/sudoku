@@ -47,18 +47,10 @@ public class SudokuController {
         return new ResponseEntity<int[][]>(ints, HttpStatus.OK);
     }
 
-    @PostMapping("/result")
-    public ResponseEntity<?> checkResult(@RequestBody int[][] boardCheck, String time, @RequestParam String userName, boolean isTip) {
-        if(isTip) {
-            Object[] result = new Object[3];
-            result[0] = isTip;
-            result[1] = userName;
-            result[2] = time;
+    @PostMapping("/result/{userName}/{time}")
+    public ResponseEntity<?> checkResult(@RequestBody int[][] boardCheck, @PathVariable String time,
+                                         @PathVariable String userName) throws UnsupportedEncodingException {
 
-            return new ResponseEntity<Object[]>(result, HttpStatus.OK);
-        } else {
-
-        }
         return new ResponseEntity<String>("OK", HttpStatus.OK);
     }
 

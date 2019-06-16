@@ -9,7 +9,7 @@ class ResultTip extends React.Component {
         let time = result[0];
         let userName = result[1];
         return (
-            <div className="alert alert-warning sizeDivWarning">
+            <div className="alert alert-danger sizeDivWarning">
                 { userName }, you were stuck by: { time }
                 <br />
                 <br />
