@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import com.example.demo.entity.Statistics;
+import com.example.demo.repository.StatisticsRepository;
 import com.example.demo.service.CustomUrlDecoder;
 import com.example.demo.service.GeneratorSudokuBoard;
 import com.example.demo.service.SudokuSolver;
@@ -11,6 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.UnsupportedEncodingException;
+
+import java.util.Date;
 
 @Controller
 @RequestMapping("sudoku")
@@ -28,6 +32,9 @@ public class SudokuController {
 
     @Autowired
     private MainThread mainThread;
+
+    @Autowired
+    private StatisticsRepository statisticsRepository;
 
     private boolean isSolved = false;
 
@@ -54,12 +61,16 @@ public class SudokuController {
     @PostMapping("/result/{userName}/{time}")
     public ResponseEntity<?> checkResult(@RequestBody int[][] boardCheck, @PathVariable String time,
                                          @PathVariable String userName) throws UnsupportedEncodingException {
+        Object[] result;
         if(mainThread.checkBoardWithinThreads(boardCheck)) {
+            Statistics statistics = new Statistics(userName, time, new Date());
+            statisticsRepository.save(statistics);
 
+            result = new Object[] {true, userName, time};
         } else {
-
+            result = new Object[] {false, userName, time};
         }
-        return new ResponseEntity<String>("OK", HttpStatus.OK);
+        return new ResponseEntity<Object[]>(result, HttpStatus.OK);
     }
 
     @PostMapping("/resultTip/{userName}")
