@@ -1,12 +1,20 @@
 package com.example.demo.controller;
 
+import com.example.demo.entity.Statistics;
+import com.example.demo.service.CustomUrlDecoder;
 import com.example.demo.service.GeneratorSudokuBoard;
+import com.example.demo.service.StatisticsService;
 import com.example.demo.service.SudokuSolver;
+import com.example.demo.thread.MainThread;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.UnsupportedEncodingException;
+
+import java.util.Date;
 
 @Controller
 @RequestMapping("sudoku")
@@ -18,6 +26,15 @@ public class SudokuController {
 
     @Autowired
     private GeneratorSudokuBoard generatorSudokuBoard;
+
+    @Autowired
+    private CustomUrlDecoder customUrlDecoder;
+
+    @Autowired
+    private MainThread mainThread;
+
+    @Autowired
+    private StatisticsService statisticsService;
 
     private boolean isSolved = false;
 
@@ -39,5 +56,33 @@ public class SudokuController {
         int[][] solvedBoard = sudokuSolver.solve(boardTipArray);
         int[][] ints = sudokuSolver.cloneArray(solvedBoard);
         return new ResponseEntity<int[][]>(ints, HttpStatus.OK);
+    }
+
+    @PostMapping("/result/{userName}/{time}")
+    public ResponseEntity<?> checkResult(@RequestBody int[][] boardCheck, @PathVariable String time,
+                                         @PathVariable String userName) throws UnsupportedEncodingException {
+        Object[] result;
+        if(mainThread.checkBoardWithinThreads(boardCheck)) {
+            Statistics statistics = new Statistics(userName, time, new Date());
+            statisticsService.save(statistics);
+
+            result = new Object[] {true, userName, time};
+        } else {
+            result = new Object[] {false, userName, time};
+        }
+        return new ResponseEntity<Object[]>(result, HttpStatus.OK);
+    }
+
+    @PostMapping("/resultTip/{userName}")
+    public ResponseEntity<?> checkResultForTip(@RequestBody  String time,
+                                               @PathVariable String userName) throws UnsupportedEncodingException {
+        time = customUrlDecoder.decodeAndSplitUrl(time);
+        userName = customUrlDecoder.decodeAndSplitUrl(userName);
+
+        Object[] result = new Object[2];
+        result[0] = time;
+        result[1] = userName;
+
+        return new ResponseEntity<Object[]>(result, HttpStatus.OK);
     }
 }
