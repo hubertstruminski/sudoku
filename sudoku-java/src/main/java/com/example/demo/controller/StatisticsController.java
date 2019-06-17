@@ -19,7 +19,8 @@ public class StatisticsController {
 
     @GetMapping
     public List<Statistics> getAllStatistics() {
-        return statisticsService.getAllStatistics();
+        List<Statistics> allStatistics = statisticsService.getAllStatistics();
+        return allStatistics;
     }
 
     @GetMapping("{id}")

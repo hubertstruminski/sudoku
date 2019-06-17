@@ -3,6 +3,7 @@ import { GET_STATISTICS, GET_STATISTIC } from './types';
 
 export const getStatistics = () => async dispatch => {
     const response = await axios.get("/statistics");
+    console.log(response);
     dispatch({
         type: GET_STATISTICS,
         payload: response.data

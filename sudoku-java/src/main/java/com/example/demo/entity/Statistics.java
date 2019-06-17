@@ -25,4 +25,16 @@ public class Statistics {
         this.time = time;
         this.date = date;
     }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public Date getDate() {
+        return date;
+    }
 }

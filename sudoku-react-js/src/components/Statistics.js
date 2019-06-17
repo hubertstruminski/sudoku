@@ -22,6 +22,7 @@ class Stat extends React.Component {
 
     render() {
         const { statistics } = this.props.statistic;
+        console.log(statistics);
         let isEmpty = this.state.isEmpty[0];
         let x = 0;
 
@@ -31,7 +32,7 @@ class Stat extends React.Component {
                     The fastest solution - TOP 5 Players
                 </div>
                 <div className="table-responsive-sm table-size flex">
-                    <table className="table table-striped table-dark table-radius table-hover">
+                    <table className="table table-striped table-dark table-radius table-hover radius">
                         <tbody>
                         {   !isEmpty &&
                             statistics.map(statistic => (

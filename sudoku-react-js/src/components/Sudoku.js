@@ -65,7 +65,7 @@ class Sudoku extends React.Component {
     createBoard = (...table) => {
         let result = [];
         let { isBlackFont, isRedFont } = this.state;
-        let x, y, z = 0;
+        let x = 0;
 
         for(let i=0; i<table.length; i++) {
             for(let j=0; j<table[i].length; j++) {
@@ -73,8 +73,7 @@ class Sudoku extends React.Component {
                 for(let k=0; k<table[i][j].length; k++) {
                     if(table[i][j][k] === 0) {
                         children.push(<div 
-                                        // key={table[0][j][k]}
-                                        key={++y} 
+                                        key={table[0][j][k]} 
                                         ref={(el) => {this.divs[x++] = el}} 
                                         className={[isBlackFont && 'square-black', isRedFont && 'square']
                                                     .filter(e => !!e).join(' ')}
@@ -84,7 +83,7 @@ class Sudoku extends React.Component {
                                     </div>);
                     } else {
                         children.push(<div 
-                                        key={++y} 
+                                        key={table[0][j][k]} 
                                         ref={(el) => {this.divs[x++] = el}} 
                                         className={[isBlackFont && 'square-black', isRedFont && 'square']
                                                     .filter(e => !!e).join(' ')}
@@ -95,7 +94,7 @@ class Sudoku extends React.Component {
                     }
                 }
                 result.push(children);
-                result.push(<div key={++z} className="clear"></div>);
+                result.push(<div className="clear"></div>);
             }  
         }
         return result;
@@ -166,14 +165,12 @@ class Sudoku extends React.Component {
         let { isVisibleStart, isVisibleTip } = this.state;
 
         return (
-            <div key="divContainer" className="container">
-                <div key="divLeft"className="left" ref={(el) => this.divLeft = el}>
+            <div className="container">
+                <div className="left" ref={(el) => this.divLeft = el}>
                 <h4 className="sizeh4">Game time: <Timer ref={this.timerRef} onPassTime={this.passTime} /></h4>
                 <br />
-                    <div ref={(el) => this.board = el}>
-                        { isVisibleStart && this.createBoard(board).slice()}
-                        {isVisibleTip && this.createBoard(boardTip).slice()}
-                    </div>
+                    { isVisibleStart && this.createBoard(board).slice()}
+                    {isVisibleTip && this.createBoard(boardTip).slice()}
                 </div>
                 <div className="right">
                     <div className="keyboard-control">
