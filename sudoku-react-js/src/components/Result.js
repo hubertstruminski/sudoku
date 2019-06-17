@@ -3,11 +3,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 class Result extends React.Component {
-    constructor() {
-        super();
-
-    }
-
     render() {
         const { result } = this.props;
 
@@ -52,7 +47,6 @@ function ShowResultMessage(props) {
             </div>
         );
     }
-    return null;
 }
 
 Result.propTypes = {

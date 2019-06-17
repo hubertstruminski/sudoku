@@ -12,15 +12,6 @@ class Header extends React.Component {
                             Sudoku Puzzles
                         </span>
                     </Link>
-                    <ul className="navbar-nav">
-                        <li>
-                            <Link to="/guide" className="nav-link">
-                                <span className="menuSize">
-                                    Guide
-                                </span>
-                            </Link>
-                        </li>
-                    </ul>
                     <div className="collapse navbar-collapse">
                         <ul className="navbar-nav navbar-collapse justify-content-end">
                             <li>

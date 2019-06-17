@@ -74,7 +74,6 @@ class Timer extends React.Component {
         return hr + ":" + min + ":" + sec;
     }
 
-
     render() {
         let time = this.showTime();
 

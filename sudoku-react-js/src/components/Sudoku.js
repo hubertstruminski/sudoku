@@ -44,12 +44,12 @@ class Sudoku extends React.Component {
         e.target.innerText = "";
 
         let keycode = e.keyCode;
-        if(keycode > 64 && keycode < 91 || keycode > 185 && keycode < 193 ||
-            keycode > 218 && keycode < 223 || keycode == 48) {
+        if((keycode > 64 && keycode < 91) || (keycode > 185 && keycode < 193) ||
+            (keycode > 218 && keycode < 223) || keycode === 48) {
             e.preventDefault();
             e.target.innerText = "";
         }
-        if(keycode == 32 || keycode == 13) {
+        if(keycode === 32 || keycode === 13) {
             e.preventDefault();
             e.target.innerText = "";
         }
@@ -65,7 +65,7 @@ class Sudoku extends React.Component {
     createBoard = (...table) => {
         let result = [];
         let { isBlackFont, isRedFont } = this.state;
-        let x = 0;
+        let x, y, z = 0;
 
         for(let i=0; i<table.length; i++) {
             for(let j=0; j<table[i].length; j++) {
@@ -73,7 +73,8 @@ class Sudoku extends React.Component {
                 for(let k=0; k<table[i][j].length; k++) {
                     if(table[i][j][k] === 0) {
                         children.push(<div 
-                                        key={table[0][j][k]} 
+                                        // key={table[0][j][k]}
+                                        key={++y} 
                                         ref={(el) => {this.divs[x++] = el}} 
                                         className={[isBlackFont && 'square-black', isRedFont && 'square']
                                                     .filter(e => !!e).join(' ')}
@@ -83,7 +84,7 @@ class Sudoku extends React.Component {
                                     </div>);
                     } else {
                         children.push(<div 
-                                        key={table[0][j][k]} 
+                                        key={++y} 
                                         ref={(el) => {this.divs[x++] = el}} 
                                         className={[isBlackFont && 'square-black', isRedFont && 'square']
                                                     .filter(e => !!e).join(' ')}
@@ -94,7 +95,7 @@ class Sudoku extends React.Component {
                     }
                 }
                 result.push(children);
-                result.push(<div className="clear"></div>);
+                result.push(<div key={++z} className="clear"></div>);
             }  
         }
         return result;
@@ -165,12 +166,14 @@ class Sudoku extends React.Component {
         let { isVisibleStart, isVisibleTip } = this.state;
 
         return (
-            <div className="container">
-                <div className="left" ref={(el) => this.divLeft = el}>
+            <div key="divContainer" className="container">
+                <div key="divLeft"className="left" ref={(el) => this.divLeft = el}>
                 <h4 className="sizeh4">Game time: <Timer ref={this.timerRef} onPassTime={this.passTime} /></h4>
                 <br />
-                    { isVisibleStart && this.createBoard(board).slice()}
-                    {isVisibleTip && this.createBoard(boardTip).slice()}
+                    <div ref={(el) => this.board = el}>
+                        { isVisibleStart && this.createBoard(board).slice()}
+                        {isVisibleTip && this.createBoard(boardTip).slice()}
+                    </div>
                 </div>
                 <div className="right">
                     <div className="keyboard-control">
@@ -193,7 +196,7 @@ class Sudoku extends React.Component {
                                 value={this.state.username}
                             />
                             <br />
-                            <label for="username">Username</label>
+                            <label htmlFor="username">Username</label>
                             <br />
                             <input 
                                 type="submit" 

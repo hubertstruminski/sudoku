@@ -2,7 +2,6 @@ import React from 'react';
 import './App.css';
 import Header from './components/Layout/Header';
 import Sudoku from './components/Sudoku';
-import Guide from './components/Guide';
 import Stat from './components/Statistics';
 
 import { Provider } from 'react-redux';
@@ -22,7 +21,6 @@ function App() {
           <Route exact path="/result" component={Result} />
           <Route exact path="/resultTip" component={ResultTip} />
 
-          <Route exact path="/guide" component={Guide} />
           <Route exact path="/world_statistics" component={Stat} />
         </div>
       </Router>
