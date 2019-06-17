@@ -38,7 +38,7 @@
   width: 11%;
   height: 11%;
   border: 1px solid black;
-  font-size: 35px;
+  font-size: 2.1vw;
   float: left;
   background-color: white;
   overflow: hidden;
@@ -74,32 +74,106 @@
 
 .right {
   float: left;
-  width: 30%;
+  width: 50%;
   margin-top: 15%;
 }
 
 .btnTip {
-  width: 42%;
-  padding: 4%;
+  width: 40%;
+  padding: 3.5%;
   background-color: #363D42;
-  border-radius: 25px;
+  border-radius: 40px;
   color: white;
   text-align: center;
   border: 1px solid black;
-  text-transform: uppercase;
   letter-spacing: 4px;
+  margin-top: 4%;
+  font-size: 1vw;
 }
+
 .square-black {
   width: 11%;
   height: 11%;
   border: 1px solid black;
-  font-size: 35px;
+  font-size: 2.1vw;
   float: left;
   background-color: white;
   overflow: hidden;
   white-space: nowrap;
   color: black !important;
 }
+
 [contentEditable="true"].square {
   color: black !important;
+}
+
+.keyboard-control {
+  text-align: center;
+  
+}
+
+.inputUser {
+  margin-top: 0;
+  width: 40%;
+  padding: 1.5%;
+  border-radius: 40px;
+  border: 1px solid black;
+}
+
+.redFont {
+  color: red;
+  margin-top: 43.5%;
+  font-size: 1vw;
+}
+
+.invalidUser {
+  margin-top: 4%;
+}
+
+.sizeh3 {
+  font-size: 1.5vw;
+}
+
+.sizeh4 {
+  font-size: 1.4vw;
+}
+
+.logoSize {
+  font-size: 1.2vw;
+}
+
+.menuSize {
+  font-size: 0.9vw;
+}
+
+.sizeDivWarning {
+  width: 40%;
+  min-height: 30%;
+  margin-top: 17%;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 1.5vw;
+}
+
+.table-size {
+  width: 60%;
+
+}
+
+.flex {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.title {
+  position: absolute;
+  left: 50%;
+  top: 20%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  font-weight: 500;
+  font-size: 2.8vw;
 }

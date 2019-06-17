@@ -79,20 +79,4 @@ public class GeneratorSudokuBoard {
         }
         return result;
     }
-
-//    public static void main(String[] args) {
-//        GeneratorSudokuBoard generatorSudokuBoard = new GeneratorSudokuBoard();
-//        int[][] result = generatorSudokuBoard.generateSudokuBoard();
-//
-//        for(int i=0; i<result.length; i++) {
-//            for(int j=0; j<result[i].length; j++) {
-//                if(result[i][j] == 0) {
-//                    System.out.print("* ");
-//                    continue;
-//                }
-//                System.out.print(result[i][j] + " ");
-//            }
-//            System.out.print("\n");
-//        }
-//    }
 }
