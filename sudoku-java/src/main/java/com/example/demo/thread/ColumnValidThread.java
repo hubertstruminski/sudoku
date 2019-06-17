@@ -30,8 +30,4 @@ public class ColumnValidThread implements Runnable {
             }
         }
     }
-
-    public Set<Integer> getColumnSet() {
-        return columnSet;
-    }
 }

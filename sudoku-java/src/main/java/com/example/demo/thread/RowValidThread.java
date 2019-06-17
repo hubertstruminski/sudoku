@@ -31,8 +31,4 @@ public class RowValidThread implements Runnable {
             }
         }
     }
-
-    public Set<Integer> getRowSet() {
-        return rowSet;
-    }
 }

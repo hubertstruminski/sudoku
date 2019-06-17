@@ -38,8 +38,4 @@ public class SubSquareValidThread implements Runnable {
             }
         }
     }
-
-    public Set<Integer> getSubSquareSet() {
-        return subSquareSet;
-    }
 }
