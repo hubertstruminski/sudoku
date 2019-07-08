@@ -8,7 +8,7 @@ public class SubSquareValidThread implements Runnable {
     private int row;
     private int column;
     private int[][] board;
-    private Set<Integer> subSquareSet;
+    public Set<Integer> subSquareSet;
 
     public SubSquareValidThread(int row, int column, int[][] board) {
         this.row = row;
@@ -28,7 +28,7 @@ public class SubSquareValidThread implements Runnable {
                     if (board[r][c] == number) {
                         subSquareSet.add(number);
                     }
-                    if(i == (r + 2) && j == (c+2)  && number == 9) {
+                    if(i == (r + 2) && j == (c + 2)  && number == 9) {
                         if(subSquareSet.size() != 9) {
                             return;
                         }
@@ -37,5 +37,9 @@ public class SubSquareValidThread implements Runnable {
 
             }
         }
+    }
+
+    public Set<Integer> getSubSquareSet() {
+        return subSquareSet;
     }
 }

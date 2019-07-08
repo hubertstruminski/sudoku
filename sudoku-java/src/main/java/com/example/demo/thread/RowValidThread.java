@@ -7,7 +7,7 @@ public class RowValidThread implements Runnable {
 
     private int row;
     private int[][] board;
-    private Set<Integer> rowSet;
+    public Set<Integer> rowSet;
 
     public RowValidThread(int row, int[][] board) {
         this.row = row;
@@ -30,5 +30,9 @@ public class RowValidThread implements Runnable {
                 }
             }
         }
+    }
+
+    public Set<Integer> getRowSet() {
+        return rowSet;
     }
 }

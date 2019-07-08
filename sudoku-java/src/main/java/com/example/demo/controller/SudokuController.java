@@ -1,10 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.Statistics;
-import com.example.demo.service.CustomUrlDecoder;
-import com.example.demo.service.GeneratorSudokuBoard;
-import com.example.demo.service.StatisticsService;
-import com.example.demo.service.SudokuSolver;
+import com.example.demo.service.*;
 import com.example.demo.thread.MainThread;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,6 +35,9 @@ public class SudokuController {
     @Autowired
     private StatisticsService statisticsService;
 
+    @Autowired
+    private SudokuService sudokuService;
+
     private boolean isSolved = false;
 
     @GetMapping
@@ -67,10 +67,12 @@ public class SudokuController {
     }
 
     @PostMapping("/result/{userName}/{time}")
-    public ResponseEntity<?> checkResult(@RequestBody int[][] boardCheck, @PathVariable String time,
+    public ResponseEntity<?> checkResult(@RequestBody int[] boardCheck, @PathVariable String time,
                                          @PathVariable String userName) throws UnsupportedEncodingException {
         Object[] result;
-        if(mainThread.checkBoardWithinThreads(boardCheck)) {
+        int[][] solvedSudoku = sudokuService.convertArray(boardCheck);
+
+        if( mainThread.checkBoardWithinThreads(solvedSudoku)) {
             Statistics statistics = new Statistics(userName, time, new Date());
             statisticsService.save(statistics);
 
@@ -81,15 +83,16 @@ public class SudokuController {
         return new ResponseEntity<Object[]>(result, HttpStatus.OK);
     }
 
-    @PostMapping("/resultTip/{userName}")
+    @PostMapping("/resultTip/{userName}/{numberOfTips}")
     public ResponseEntity<?> checkResultForTip(@RequestBody  String time,
-                                               @PathVariable String userName) throws UnsupportedEncodingException {
+                                               @PathVariable String userName, @PathVariable int numberOfTips) throws UnsupportedEncodingException {
         time = customUrlDecoder.decodeAndSplitUrl(time);
         userName = customUrlDecoder.decodeAndSplitUrl(userName);
 
-        Object[] result = new Object[2];
+        Object[] result = new Object[3];
         result[0] = time;
         result[1] = userName;
+        result[2] = numberOfTips;
 
         return new ResponseEntity<Object[]>(result, HttpStatus.OK);
     }

@@ -11,7 +11,6 @@ class Sudoku extends React.Component {
         super(props);
 
         this.state = {
-            boardTip: [],
             isVisibleStart: false,
             isBlackFont: false,
             isRedFont: true,
@@ -19,10 +18,14 @@ class Sudoku extends React.Component {
             username: '',
             invalidUserName: false,
             isEmptyCellsArray: [],
+            isEmptyCell: false
         }
         this.timerRef = React.createRef();
 
         this.divs = [];
+        this.numberOfTips = 0;
+        this.isTip = false;
+        this.isEmpty = false;
 
         this.giveTip = this.giveTip.bind(this);
         this.onKey = this.onKey.bind(this);
@@ -116,6 +119,8 @@ class Sudoku extends React.Component {
         const { board } = this.props;
         let solvedBoard = board[1];
 
+        this.isTip = true;
+
         if(this.isEmptyDivArray.length !== 0) {
             let index = Math.floor(Math.random() * this.isEmptyDivArray.length);
             let x = this.isEmptyDivArray[index].x;
@@ -127,6 +132,8 @@ class Sudoku extends React.Component {
             let numberOfDiv = x * 9 + y;
 
             this.divs[numberOfDiv].current.innerText = result;
+
+            ++this.numberOfTips;
         } 
     }
 
@@ -138,41 +145,46 @@ class Sudoku extends React.Component {
             e.preventDefault();
         }
 
-        let isTip = this.state.isVisibleTip;
+        console.log(this.isTip);
         this.timerRef.current.stopTime();
 
         let time = this.state.time[0];
         let userName = this.state.username;
 
-        if(isTip) {
-            this.props.checkResultTip(time, userName, this.props.history);
+        if(this.isTip) {
+            this.props.checkResultTip(time, userName, this.numberOfTips, this.props.history);
         } else {
             let fullFilledBoard = this.divs;
             let processedBoard = this.processBoard(fullFilledBoard);
 
-            this.props.checkResult(processedBoard, time, userName, this.props.history);
+            if(this.isEmpty) {
+                this.setState({ isEmptyCell: this.isEmpty });
+                return false;
+            } else {
+                this.props.checkResult(processedBoard, time, userName, this.props.history);
+            }
+            
         }
     }
 
     create2DArray(rows) {
-        var array = [];   
+        var array = new Array(rows); 
         for (var i=0;i<rows;i++) {
-           array[i] = [];
+           array[i] = new Array(9);
         }
         return array;
       }
 
     processBoard(...table) {
-        let result = this.create2DArray(9);
-        let rows = 0;
-        let columns = 0;
-        for(let i=0; i<81; i++) {
-            if(columns === 9) {
-                columns = 0;
-                rows++;
+        let result = []
+        for(let i=0; i<table[0].length; i++) {
+            if(table[0][i].current !== null) {
+                if(table[0][i].current.innerHTML === "") {
+                    this.isEmpty = true;
+                    break;
+                }
+                result.push(table[0][i].current.innerHTML);
             }
-            result[rows][columns] = table[0][i].innerText;
-            columns++;
         }
         return result;
     }
@@ -221,6 +233,7 @@ class Sudoku extends React.Component {
                 </div>
                 <div className="clear"></div> 
                 <ShowInvalidUserName invalidUserName={this.state.invalidUserName} />
+                <ShowWarningEmptyCell isEmptyCell={this.state.isEmptyCell} />
             </div>
         );
     }
@@ -230,6 +243,15 @@ function ShowInvalidUserName(props) {
     if(props.invalidUserName) {
         return (
             <div className="alert alert-danger invalidUser">You forgot input your user name. Try again...</div>
+        );
+    }
+    return null;
+}
+
+function ShowWarningEmptyCell(props) {
+    if(props.isEmptyCell) {
+        return (
+            <div className="alert alert-danger invalidUser">Your Sudoku board can have empty cells. Check it!</div>
         );
     }
     return null;

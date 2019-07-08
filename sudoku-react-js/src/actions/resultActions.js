@@ -10,8 +10,8 @@ export const checkResult = (boardCheck, time, userName, history) => async dispat
     });
 }
 
-export const checkResultTip = (time, userName, history) => async dispatch => {
-    const response = await axios.post(`/sudoku/resultTip/${userName}`, time);
+export const checkResultTip = (time, userName, numberOfTips, history) => async dispatch => {
+    const response = await axios.post(`/sudoku/resultTip/${userName}/${numberOfTips}`, time);
     history.push("/resultTip");
     dispatch({
         type: GET_RESULT,

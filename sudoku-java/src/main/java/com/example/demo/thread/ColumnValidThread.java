@@ -7,7 +7,7 @@ public class ColumnValidThread implements Runnable {
 
     private int column;
     private int[][] board;
-    private Set<Integer> columnSet;
+    public Set<Integer> columnSet;
 
     public ColumnValidThread(int column, int[][] board) {
         this.column = column;
@@ -29,5 +29,9 @@ public class ColumnValidThread implements Runnable {
                 }
             }
         }
+    }
+
+    public Set<Integer> getColumnSet() {
+        return columnSet;
     }
 }

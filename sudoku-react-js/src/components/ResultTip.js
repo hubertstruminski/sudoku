@@ -8,12 +8,13 @@ class ResultTip extends React.Component {
         const { result } = this.props;
         let time = result[0];
         let userName = result[1];
+        let numberOfTips = result[2];
         return (
             <div className="alert alert-danger sizeDivWarning">
                 { userName }, you were stuck in { time }.
                 <br />
                 <br />
-                You used the tip so you will not get to the rankings.
+                You used the {numberOfTips} tip so you will not get to the rankings.
                 <br />
                 Try again...
             </div>

@@ -3,6 +3,11 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 class Result extends React.Component {
+    constructor(props) {
+        super(props);
+
+    }
+
     render() {
         const { result } = this.props;
 
@@ -50,7 +55,7 @@ function ShowResultMessage(props) {
 }
 
 Result.propTypes = {
-    result: PropTypes.array
+    result: PropTypes.array.isRequired
 }
 
 const mapStateToProps = state => ({
