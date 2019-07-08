@@ -13,12 +13,12 @@ class Sudoku extends React.Component {
         this.state = {
             boardTip: [],
             isVisibleStart: false,
-            isVisibleTip: false,
             isBlackFont: false,
             isRedFont: true,
             time: [],
             username: '',
-            invalidUserName: false
+            invalidUserName: false,
+            isEmptyCellsArray: [],
         }
         this.timerRef = React.createRef();
 
@@ -29,6 +29,8 @@ class Sudoku extends React.Component {
         this.checkBoard = this.checkBoard.bind(this);
         this.passTime = this.passTime.bind(this);
         this.onChange = this.onChange.bind(this);
+
+        this.isEmptyDivArray = [];
     }
 
     componentDidMount() {
@@ -66,50 +68,66 @@ class Sudoku extends React.Component {
         let result = [];
         let { isBlackFont, isRedFont } = this.state;
         let x = 0;
+        for(let a=0; a<table.length; a++) {
+            for(let i=0; i<table[a].length; i++) {
+                if(i === 0) {
+                    for(let j=0; j<table[a][i].length; j++) {
+                        let children = [];
+        
+                        for(let k=0; k<table[a][i][j].length; k++) {
+                            let divsRef = React.createRef();
+                            this.divs.push(divsRef);
 
-        for(let i=0; i<table.length; i++) {
-            for(let j=0; j<table[i].length; j++) {
-                let children = [];
-                for(let k=0; k<table[i][j].length; k++) {
-                    if(table[i][j][k] === 0) {
-                        children.push(<div 
-                                        key={table[0][j][k]} 
-                                        ref={(el) => {this.divs[x++] = el}} 
-                                        className={[isBlackFont && 'square-black', isRedFont && 'square']
-                                                    .filter(e => !!e).join(' ')}
-                                        contentEditable="true"
-                                        onKeyDown={this.onKey}
-                                        > 
-                                    </div>);
-                    } else {
-                        children.push(<div 
-                                        key={table[0][j][k]} 
-                                        ref={(el) => {this.divs[x++] = el}} 
-                                        className={[isBlackFont && 'square-black', isRedFont && 'square']
-                                                    .filter(e => !!e).join(' ')}
-                                        onKeyDown={this.onKey}
-                                        >
-                                         { table[i][j][k] }
-                                    </div>);
+                            if(table[a][i][j][k] === 0) {
+                                children.push(<div 
+                                                key={table[a][0][j][k]} 
+                                                ref={divsRef} 
+                                                className={[isBlackFont && 'square-black', isRedFont && 'square']
+                                                            .filter(e => !!e).join(' ')}
+                                                contentEditable="true"
+                                                onKeyDown={this.onKey}
+                                                > 
+                                            </div>);
+                                this.isEmptyDivArray.push(new coordinatesForEmptyCell(j, k));
+                            } else {
+                                children.push(<div 
+                                                key={table[a][0][j][k]} 
+                                                ref={divsRef} 
+                                                className={[isBlackFont && 'square-black', isRedFont && 'square']
+                                                            .filter(e => !!e).join(' ')}
+                                                onKeyDown={this.onKey}
+                                                >
+                                                 { table[a][i][j][k] }
+                                            </div>);
+                            }
+                        }
+                        result.push(children);
+                        result.push(<div className="clear"></div>);
                     }
-                }
-                result.push(children);
-                result.push(<div className="clear"></div>);
-            }  
+                }             
+            }
         }
         return result;
     }
 
     giveTip(e) {
         e.preventDefault();
-        const { board, getTip } = this.props;
-        this.setState({ 
-            isVisibleTip: true,
-            isVisibleStart: false,
-            isBlackFont: true,
-            isRedFont: false
-        })
-        getTip(board, this.state.history);   
+
+        const { board } = this.props;
+        let solvedBoard = board[1];
+
+        if(this.isEmptyDivArray.length !== 0) {
+            let index = Math.floor(Math.random() * this.isEmptyDivArray.length);
+            let x = this.isEmptyDivArray[index].x;
+            let y = this.isEmptyDivArray[index].y;
+        
+            this.isEmptyDivArray.splice(index, 1);
+
+            let result = solvedBoard[x][y];  
+            let numberOfDiv = x * 9 + y;
+
+            this.divs[numberOfDiv].current.innerText = result;
+        } 
     }
 
     checkBoard(e) {
@@ -161,8 +179,7 @@ class Sudoku extends React.Component {
 
     render() {
         const { board } = this.props;
-        const { boardTip } = this.props;
-        let { isVisibleStart, isVisibleTip } = this.state;
+        let { isVisibleStart } = this.state;
 
         return (
             <div className="container">
@@ -170,7 +187,6 @@ class Sudoku extends React.Component {
                 <h4 className="sizeh4">Game time: <Timer ref={this.timerRef} onPassTime={this.passTime} /></h4>
                 <br />
                     { isVisibleStart && this.createBoard(board).slice()}
-                    {isVisibleTip && this.createBoard(boardTip).slice()}
                 </div>
                 <div className="right">
                     <div className="keyboard-control">
@@ -217,6 +233,11 @@ function ShowInvalidUserName(props) {
         );
     }
     return null;
+}
+
+function coordinatesForEmptyCell(x, y) {
+    this.x = x;
+    this.y = y;
 }
 
 Sudoku.propTypes = {

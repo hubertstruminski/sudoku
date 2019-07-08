@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.UnsupportedEncodingException;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequestMapping("sudoku")
@@ -45,7 +47,13 @@ public class SudokuController {
             int[][] sudokuBoard = sudokuSolver.cloneArray(entireArray);
 
             if(sudokuSolver.solveChecker(sudokuBoard)) {
-                return new ResponseEntity<int[][]>(entireArray, HttpStatus.CREATED);
+                int[][] solvedSudoku = sudokuSolver.solve(sudokuBoard);
+
+                List<int[][]> result = new ArrayList<>();
+                result.add(entireArray);
+                result.add(solvedSudoku);
+
+                return new ResponseEntity<List<int[][]>>(result, HttpStatus.CREATED);
             }
         }
         return new ResponseEntity<String>("If you see this message contact with our support.", HttpStatus.BAD_REQUEST);
