@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 class Result extends React.Component {
     constructor(props) {
         super(props);
-
     }
 
     render() {
